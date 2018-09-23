@@ -3,6 +3,7 @@ import {
   BeforeInsert,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
   Entity,
   PrimaryGeneratedColumn,  
 } from 'typeorm';
@@ -28,6 +29,7 @@ class Verification extends BaseEntity {
   used: boolean;
 
   @CreateDateColumn() createdAt: string;
+  @UpdateDateColumn() updatedAt: string;
 
   @BeforeInsert()
   createKey(): void {
