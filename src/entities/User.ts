@@ -55,11 +55,19 @@ class User extends BaseEntity {
     return `${this.firstName} ${this.lastName}`;
   }
 
-  // 새로운 object를 만들기 전에 불려지는 메소드
-  @BeforeInsert()
-  @BeforeUpdate()
+  // 일반 text인 password와 hashing된 password랑 비교
+  public comparePassword(password: string = '') : Promise<boolean> {  
+    return bcrypt.compare(
+      password,
+      this.password
+    );
+  }
+
+  // 새로운 object를 만들기 전에 불려지는 메소드  
   // async로 감싼 이유는 hashing 과정이 비동기적으로 이루어지기 때문이다.
   // 그러므로 hashedPassword 를 얻기 위해서는 hasing이 끝날때까지 await 기다려줘야 한다.
+  @BeforeInsert()
+  @BeforeUpdate()
   async savePassword() : Promise<void> {
     if (this.password) {
       // hash한다 즉 암호화한다.
