@@ -1,0 +1,16 @@
+# Verification 는 사용자 계정 인증 인것같다. 추측
+
+type Verification {
+  id: Int!
+  target: String!
+  # key == payload
+  payload: String!
+  key: String!
+  used: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+
+# 전화번호 또는 email 또는 password를 검증하면 payload또는 key를 생성해줌으로써
+# 로그인중인지? 체크하나봄
