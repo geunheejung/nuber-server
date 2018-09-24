@@ -1,3 +1,4 @@
+# 전화번호 verification 스키마
 type CompletePhopneNumberVerificationResponse {
   ok: Boolean!
   error: String
