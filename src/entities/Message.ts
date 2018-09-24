@@ -1,5 +1,6 @@
 import {
   BaseEntity,
+  Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
@@ -8,11 +9,15 @@ import {
 } from 'typeorm';
 
 import Chat from './Chat';
+import User from './User';
 
 @Entity()
 class Message extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ type: 'text' })
+  text: string;
 
   // many Message 가 하나의 Chat 를 바라본다.
   // type이 Chat임으로 Chat의 속성인 messages 를 참조할 수 있다. Chat에 정의된 messages는
@@ -21,6 +26,9 @@ class Message extends BaseEntity {
   // Message에서 Chat에 대한 참조를 명세하나봄
   @ManyToOne(type => Chat, chat => chat.messages)
   chat: Chat;
+
+  @ManyToOne(type => User, user => user.messages)
+  user: User;
 
   @CreateDateColumn()
   createdAt: string;

@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import Message from './Message';
+import User from './User';
 
 @Entity()
 class Chat extends BaseEntity {
@@ -18,6 +19,10 @@ class Chat extends BaseEntity {
   // message의 chat는 Chat 하나이기에 하나의 Chat가 messages를 messages가 하나의 Chat를
   @OneToMany(type => Message, message => message.chat)
   messages: Message[];
+
+  // 하나의 Chat.participants 는 여러 User 를 가질 수 있다.
+  @OneToMany(type => User, user => user.chat)
+  participants: User[];
 
   @CreateDateColumn()
   createdAt: string;
