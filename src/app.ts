@@ -3,7 +3,6 @@ import logger from 'morgan';
 import cors from 'cors';
 import { GraphQLServer } from 'graphql-yoga';
 import schema from './schema';
-import { Resolvers } from './types/resolvers';
 
 class App {
   public app: GraphQLServer;
