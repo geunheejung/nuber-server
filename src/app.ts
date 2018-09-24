@@ -3,6 +3,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import { GraphQLServer } from 'graphql-yoga';
 import schema from './schema';
+import { Resolvers } from './types/resolvers';
 
 class App {
   public app: GraphQLServer;
@@ -11,11 +12,11 @@ class App {
     this.middlewares();
   }
 
-  private middlewares = (): void => {    
+  private middlewares = (): void => {
     this.app.express.use(cors());
-    this.app.express.use(logger("dev"));
+    this.app.express.use(logger('dev'));
     this.app.express.use(helmet());
-  }
+  };
 }
 
 export default new App().app;
