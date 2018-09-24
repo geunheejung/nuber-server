@@ -1,0 +1,12 @@
+type CompletePhopneNumberVerificationResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  CompletePhopneNumberVerification(
+    phoneNumber: String!
+    key: String!
+  ): CompletePhopneNumberVerificationResponse!
+}
