@@ -1,5 +1,6 @@
 import { Resolvers } from '../../../types/resolvers';
 import User from '../../../entities/User';
+import createJWT from '../../../utils/createJWT';
 import {
   EmailSignInMutationArgs,
   EmailSignInResponse,
@@ -28,10 +29,11 @@ const resolvers: Resolvers = {
         // 해싱된 password가 User에 존재하는지 체크
         const checkPassword = await user.comparePassword(password);
         if (checkPassword) {
+          const token = createJWT(user.id);
           return {
             ok: true,
             error: null,
-            token: 'Coming soon',
+            token,
           };
         } else {
           return {

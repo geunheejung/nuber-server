@@ -1,5 +1,6 @@
 import { Resolvers } from '../../../types/resolvers';
 import User from '../../../entities/User';
+import createJWT from '../../../utils/createJWT';
 import {
   FacebookConnectMutationArgs,
   FacebookConnectResponse,
@@ -16,15 +17,16 @@ const resolvers: Resolvers = {
       try {
         // 이미 존재할 경우
         const existingUser = await User.findOne({ fbId });
+
         if (existingUser) {
+          const token = createJWT(existingUser.id);
           return {
             ok: true,
             error: null,
-            token: 'Coming soon, already',
+            token,
           };
         }
       } catch (error) {
-        console.log('error ::', error);
         return {
           ok: false,
           error: error.message,
@@ -35,16 +37,15 @@ const resolvers: Resolvers = {
       // 새로 생성
       try {
         const PROFILE_PHOTO_URL = `http://graph.facebook.com/${fbId}/picture?type=square`;
-
-        await User.create({
+        const newUser = await User.create({
           ...args,
           profilePhoto: PROFILE_PHOTO_URL,
         }).save();
-
+        const token = createJWT(newUser.id);
         return {
           ok: true,
           error: null,
-          token: 'Coming soon, start',
+          token,
         };
       } catch (error) {
         return {

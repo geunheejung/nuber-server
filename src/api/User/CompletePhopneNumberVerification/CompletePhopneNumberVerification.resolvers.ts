@@ -5,6 +5,7 @@ import {
   CompletePhopneNumberVerificationResponse,
 } from '../../../types/graph';
 import User from '../../../entities/User';
+import createJWT from '../../../utils/createJWT';
 
 /** TODO phoneNumber 검증
  * 1. phoneNumber가 Verification 되었나?
@@ -54,10 +55,11 @@ const resolvers: Resolvers = {
         if (user) {
           user.verifiedPhoneNumber = true;
           user.save();
+          const token = createJWT(user.id);
           return {
             ok: true,
             error: null,
-            token: 'Coming soon',
+            token,
           };
         } else {
           // phoneNumber는 verified되었지만, DB에 존재하지는 않은 유저
