@@ -18,10 +18,15 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 
 ---
 
-### Private Resolvers:
+### Authentication:
 
 - [ ] Generate JWT
 - [ ] Verifiy JWT
+
+---
+
+### Private Resolvers:
+
 - [ ] Verify Email
 - [ ] Get my Profile
 - [ ] Update my Profile
