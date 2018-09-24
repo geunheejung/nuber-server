@@ -1,3 +1,86 @@
+import { Resolvers } from '../../../types/resolvers';
+import Verification from '../../../entities/Verification';
+import {
+  CompletePhopneNumberVerificationMutationArgs,
+  CompletePhopneNumberVerificationResponse,
+} from '../../../types/graph';
+import User from '../../../entities/User';
+
+/** TODO phoneNumber 검증
+ * 1. phoneNumber가 Verification 되었나?
+ * 1.1 Verification.verified = true;로 바꾸고 save();
+ * 1.2 검증되지 않았다고 error 반환
+ * 2. 이미 존재하는 phoneNumber인가?
+ * 2.1 user의 verifiedPhoneNumber = true; save(); 검증 완료
+ * 2.2 phoneNumber verified는 되었지만 DB에는 존재하지 않음 그러므로 error, token 둘다 null ok는 true
+ *
+ */
+const resolvers: Resolvers = {
+  Mutation: {
+    CompletePhopneNumberVerification: async (
+      _,
+      args: CompletePhopneNumberVerificationMutationArgs
+    ): Promise<CompletePhopneNumberVerificationResponse> => {
+      const { phoneNumber, key } = args;
+      try {
+        const verification = await Verification.findOne({
+          payload: phoneNumber,
+          key,
+        });
+
+        if (!verification) {
+          return {
+            ok: false,
+            error: 'Verificztion token not vaild',
+            token: null,
+          };
+        } else {
+          verification.verified = true;
+          verification.save();
+        }
+      } catch (error) {
+        return {
+          ok: false,
+          error: error.message,
+          token: null,
+        };
+      }
+
+      /** TODO verification을 통과한 뒤 user가 DB에 존재할 경우
+       *
+       */
+      try {
+        const user = await User.findOne({ phoneNumber });
+        if (user) {
+          user.verifiedPhoneNumber = true;
+          user.save();
+          return {
+            ok: true,
+            error: null,
+            token: 'Coming soon',
+          };
+        } else {
+          // phoneNumber는 verified되었지만, DB에 존재하지는 않은 유저
+          // phone 인증은 성공했지만 할당된 유저는 없기에 성공이면서 null
+          return {
+            ok: true,
+            error: null,
+            token: null,
+          };
+        }
+      } catch (error) {
+        return {
+          ok: false,
+          error: error.message,
+          token: null,
+        };
+      }
+    },
+  },
+};
+
+export default resolvers;
+
 /*
 만약 이미 계정을 가지고 있고
 방금 폰을 열었고
@@ -12,4 +95,12 @@
 만약 그 핸드폰번호를 가진 유저가 없으면
 오케이 인증되었다라 뜰것
 하지만 유저(계정)은 없을것.
+
+어플은 우리가 어떻게 보내냐에따라 다르게 반응하기에
+어떤 유저의 폰 번호가 인증되고 우리가 데이터베이스에서 그 사람을 찾으면
+우리는 그 사람을 고정(잠금)해 둔다.
+
+만약에 어떤 유저가 폰번호를 인증하고
+데이터베이스에 등록되지 않았다는게 증명되면
+그건 그 유저가 프로필을 생성하길 원한다는 뜻
 */

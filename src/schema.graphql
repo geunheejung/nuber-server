@@ -45,16 +45,23 @@ type Ride {
   updatedAt: String
 }
 
-type EmailSignInResponse {
+type CompletePhopneNumberVerificationResponse {
   ok: Boolean!
   error: String
   token: String
 }
 
 type Mutation {
+  CompletePhopneNumberVerification(phoneNumber: String!, key: String!): CompletePhopneNumberVerificationResponse!
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+}
+
+type EmailSignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
 }
 
 # React에서 보내주는 값으로 엔티티의 값들을 변경
@@ -107,6 +114,7 @@ type Verification {
   target: String!
   payload: String!
   key: String!
+  verified: Boolean!
   createdAt: String!
   updatedAt: String!
 }

@@ -24,7 +24,7 @@ const resolvers: Resolvers = {
           };
         }
 
-        // User 엔티티에서 제공하는 comparePassword로
+        // User 엔티티에서  제공하는 comparePassword로
         // 해싱된 password가 User에 존재하는지 체크
         const checkPassword = await user.comparePassword(password);
         if (checkPassword) {
