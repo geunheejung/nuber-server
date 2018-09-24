@@ -15,11 +15,28 @@ const resolvers: Resolvers = {
       try {
         const { email, password } = args;
         const user = await User.findOne({ email });
-
+        // User엔티티에 존재하지 않을 경우
         if (!user) {
           return {
             ok: false,
             error: 'No User found with that email',
+            token: null,
+          };
+        }
+
+        // User 엔티티에서 제공하는 comparePassword로
+        // 해싱된 password가 User에 존재하는지 체크
+        const checkPassword = await user.comparePassword(password);
+        if (checkPassword) {
+          return {
+            ok: true,
+            error: null,
+            token: 'Coming soon',
+          };
+        } else {
+          return {
+            ok: false,
+            error: 'Wrong password',
             token: null,
           };
         }

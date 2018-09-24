@@ -11,7 +11,7 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 ### Public Resolvers:
 
 - [x] Sign In / Sign Up with Facebook 2018/09/24/(월) 14:24
-- [ ] Sign In with Email
+- [x] Sign In with Email
 - [ ] Start Phone Number Verification
 - [ ] Complete Phone Number Verification
 - [ ] Sign Up with Email
