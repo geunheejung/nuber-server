@@ -54,6 +54,7 @@ type EmailSignInResponse {
 type Mutation {
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
+  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
 }
 
 # React에서 보내주는 값으로 엔티티의 값들을 변경
@@ -84,7 +85,7 @@ type User {
   fbId: String
   chat: Chat
   messages: [Message]
-  verifications: [Verification]
+  # verifications: [Verification]
   ridesAsPassenger: [Ride]
   ridesAsDriver: [Ride]
   createdAt: String!
@@ -95,6 +96,12 @@ type Query {
   user: User
 }
 
+type StartPhoneVerificationResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
 type Verification {
   id: Int!
   target: String!
@@ -102,7 +109,7 @@ type Verification {
   payload: String!
   key: String!
   used: Boolean!
-  user: User!
+  # user: User!
   createdAt: String!
   updatedAt: String!
 }
