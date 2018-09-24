@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from "typeorm";
+  UpdateDateColumn,
+  ManyToOne,
+} from 'typeorm';
+
+import User from './User';
 
 @Entity()
 class Ride extends BaseEntity {
@@ -14,37 +17,44 @@ class Ride extends BaseEntity {
   id: number;
 
   @Column({
-    type: "text",
-    enum: ["ACCEPTED", "FINISHED", "CANCELED", "REQUESTING", "ONROUTE"]
-  })  
+    type: 'text',
+    enum: ['ACCEPTED', 'FINISHED', 'CANCELED', 'REQUESTING', 'ONROUTE'],
+  })
   status: rideStatus;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   pickUpAddress: string;
 
-  @Column({ type: "double precision", default: 0 })
+  @Column({ type: 'double precision', default: 0 })
   pickUpLat: number;
 
-  @Column({ type: "double precision", default: 0 })
+  @Column({ type: 'double precision', default: 0 })
   pickUpLng: number;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   dropOffAddress: string;
 
-  @Column({ type: "double precision", default: 0 })
+  @Column({ type: 'double precision', default: 0 })
   dropOffLat: number;
 
-  @Column({ type: "double precision", default: 0 })
+  @Column({ type: 'double precision', default: 0 })
   dropOffLng: number;
 
-  @Column({ type: "double precision", default: 0 })
+  @Column({ type: 'double precision', default: 0 })
   price: number;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   distance: string;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   duration: string;
+
+  // Ride의 종류는 운전자와 탑승자가 있고 passenger 또는 driver는 여러 User를 될 수 있다.
+  @ManyToOne(type => User, user => user.ridesAsPassenger)
+  passenger: User;
+
+  @ManyToOne(type => User, user => user.ridesAsDriver)
+  driver: User;
 
   @CreateDateColumn()
   createdAt: string;

@@ -1,22 +1,25 @@
-import { 
+import {
   BaseEntity,
   BeforeInsert,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,  
+  PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
 import { VerificationTarget } from '../types/types';
+import User from './User';
 
 const PHONE = 'PHONE';
 const EMAIL = 'EMAIL';
 
 @Entity()
 class Verification extends BaseEntity {
-  @PrimaryGeneratedColumn() id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: 'text', enum: [PHONE, EMAIL] })  
+  @Column({ type: 'text', enum: [PHONE, EMAIL] })
   target: VerificationTarget;
 
   @Column({ type: 'text' })
@@ -28,8 +31,13 @@ class Verification extends BaseEntity {
   @Column({ type: 'boolean', default: false })
   used: boolean;
 
-  @CreateDateColumn() createdAt: string;
-  @UpdateDateColumn() updatedAt: string;
+  @ManyToOne(type => User, user => user.verifications)
+  user: User;
+
+  @CreateDateColumn()
+  createdAt: string;
+  @UpdateDateColumn()
+  updatedAt: string;
 
   @BeforeInsert()
   createKey(): void {
@@ -38,18 +46,20 @@ class Verification extends BaseEntity {
         this.key = String(Math.floor(Math.random() * 100000));
         break;
       case EMAIL:
-        this.key = Math.random().toString(36).substr(2);
+        this.key = Math.random()
+          .toString(36)
+          .substr(2);
         break;
       default:
         throw Error('not this.key setting');
-    }  
+    }
   }
 }
 
 export default Verification;
 
 /*
-email이나 phoneNumber를 verify할 때, 
+email이나 phoneNumber를 verify할 때,
 verification 정보를 db에 만들기 위해서 생성된 파일이다.
 사용자의 email, phoneNumber로 verification정보를 만들고,
 key 값 또한 제작하게 될것
