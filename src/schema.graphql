@@ -45,15 +45,22 @@ type Ride {
   updatedAt: String
 }
 
-# React에서 보내주는 값으로 엔티티의 값들을 변경
-type FacebookConnectResponse {
+type EmailSignInResponse {
   ok: Boolean!
   error: String
   token: String
 }
 
 type Mutation {
+  EmailSignIn(email: String!): EmailSignInResponse!
   FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
+}
+
+# React에서 보내주는 값으로 엔티티의 값들을 변경
+type FacebookConnectResponse {
+  ok: Boolean!
+  error: String
+  token: String
 }
 
 type User {
