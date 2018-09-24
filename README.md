@@ -10,7 +10,7 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 
 ### Public Resolvers:
 
-- [ ] Sign In / Sign Up with Facebook
+- [x] Sign In / Sign Up with Facebook 2018/09/24/(월) 14:24
 - [ ] Sign In with Email
 - [ ] Start Phone Number Verification
 - [ ] Complete Phone Number Verification
@@ -20,6 +20,8 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 
 ### Private Resolvers:
 
+- [ ] Generate JWT
+- [ ] Verifiy JWT
 - [ ] Verify Email
 - [ ] Get my Profile
 - [ ] Update my Profile

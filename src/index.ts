@@ -19,7 +19,6 @@ const appOptions: Options = {
 
 const handleAppStart = () => console.log(`Listening on port ${PORT}`);
 
-
 /** App <---- ORM ----> Database
  * orm 은 ormConfig에서 만든 ConnectionOptions로 데이터베아스와 앱을 연결해주는 역할을 한다.
  */
@@ -30,4 +29,3 @@ createConnection(ConnectionOptions)
   .catch(e => {
     console.error(e);
   });
-
