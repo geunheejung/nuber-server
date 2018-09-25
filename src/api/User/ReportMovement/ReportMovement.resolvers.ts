@@ -19,7 +19,9 @@ const resolvers: Resolvers = {
         try {
           await User.update({ id: user.id }, { ...notNull });
           // pubSub안에 update를 보낸다. diver이름과 보낼 data가 필요, key는 완전히 매칭되어야 한다.
-          pubSub.publish('driverUpdate', { DriversSubscription: user });
+          const updatedUser = await User.findOne({ id: user.id });
+
+          pubSub.publish('driverUpdate', { DriversSubscription: updatedUser });
           return {
             ok: true,
             error: null,

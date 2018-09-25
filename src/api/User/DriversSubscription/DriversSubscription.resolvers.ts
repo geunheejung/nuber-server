@@ -1,7 +1,6 @@
 import { withFilter } from 'graphql-yoga';
 import User from '../../../entities/User';
 
-const DRIVER_UPDATE = 'driverUpdate';
 const resolvers = {
   Subscription: {
     DriversSubscription: {
@@ -10,7 +9,7 @@ const resolvers = {
       // 2. ReportMovement resolvers가 실행
       // 3. ReportMovement resolvers는 결과물을 driverUpdate 채널에 전송
       subscribe: withFilter(
-        (_, __, { pubSub }) => pubSub.asyncIterator(DRIVER_UPDATE),
+        (_, __, { pubSub }) => pubSub.asyncIterator('driverUpdate'),
         (payload, _, { context }) => {
           const user: User = context.currentUser;
           const {
@@ -19,18 +18,41 @@ const resolvers = {
               lastLng: driverLastLng,
             },
           } = payload;
-
           const { lastLat: userLastLat, lastLng: userLastLng } = user;
-
-          const AREA_NUMBER = 0.05;
-
-          const result =
-            driverLastLat >= userLastLat - AREA_NUMBER &&
-            driverLastLat <= userLastLat + AREA_NUMBER &&
-            driverLastLng >= driverLastLng - AREA_NUMBER &&
-            driverLastLng <= driverLastLng + AREA_NUMBER;
-
-          return result;
+          // console.log(driverLastLat, driverLastLng, userLastLat, userLastLng);
+          // console.group('------ [DRIVER] ------');
+          // console.log('------------------------------');
+          // console.log(
+          //   'driverLastLat -->',
+          //   driverLastLat,
+          //   'driverLastLng --> ',
+          //   driverLastLng
+          // );
+          // console.log('------------------------------');
+          // console.groupEnd();
+          // console.group('------ [USER] ------');
+          // console.log('------------------------------');
+          // console.log(
+          //   'userLastLat -->',
+          //   userLastLat,
+          //   'userLastLng -->',
+          //   userLastLng
+          // );
+          // console.log('------------------------------');
+          // console.groupEnd();
+          // console.log(
+          //   '[RESULT]',
+          //   driverLastLat >= userLastLat - 0.05 &&
+          //     driverLastLat <= userLastLat + 0.05 &&
+          //     driverLastLng >= userLastLng - 0.05 &&
+          //     driverLastLng <= userLastLng + 0.05
+          // );
+          return (
+            driverLastLat >= userLastLat - 0.05 &&
+            driverLastLat <= userLastLat + 0.05 &&
+            driverLastLng >= userLastLng - 0.05 &&
+            driverLastLng <= userLastLng + 0.05
+          );
         }
       ),
     },
