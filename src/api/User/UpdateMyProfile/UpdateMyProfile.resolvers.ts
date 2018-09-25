@@ -6,18 +6,7 @@ import {
   UpdateMyProfileResponse,
 } from '../../../types/graph';
 import User from '../../../entities/User';
-
-const getNotNullObj = (obj: object): object => {
-  const resultNotNull: object = {};
-
-  for (const [key, value] of Object.entries(obj)) {
-    if (!_isNull(value)) {
-      resultNotNull[key] = value;
-    }
-  }
-
-  return resultNotNull;
-};
+import cleanNullArgs from '../../../utils/cleanNullArg';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -28,7 +17,7 @@ const resolvers: Resolvers = {
         context
       ): Promise<UpdateMyProfileResponse> => {
         const user: User = context.req.user;
-        const notNull: any = getNotNullObj(args);
+        const notNull: any = cleanNullArgs(args);
 
         // 인스턴스를 업데이트하기 위해서는 해당 인스턴스의 값이 존재해야 업데이트가 가능한가봄.
         if (!_isNull(notNull.password)) {
