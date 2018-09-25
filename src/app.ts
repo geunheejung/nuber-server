@@ -22,9 +22,14 @@ class App {
     this.app = new GraphQLServer({
       schema,
       context: req => {
+        const { connection: { context = null } = {} } = req;
         return {
+          // [HTTP reqeust]
           req: req.request,
+          // [PubSub Publish/Subscrption]
           pubSub: this.pubSub,
+          // [WebSocket connection]
+          context,
         };
       },
     });

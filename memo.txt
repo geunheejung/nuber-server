@@ -31,14 +31,20 @@ Publish / Subscription
 
 하나의 채널을 열어놓고 여러개의 프로그램이 혹은 여러 서버가 해당 채널을 구독하게 한 뒤 서버에서 이벤트가 발생하면 해당 내용을 발행하면 모든 구독자들이 해당 이벤트를 받을 수 있는 기능
 
-즉 
+즉
 채널을 열어놓고
 다수의 프로그램 or 다수의 서버가
 해당 채널을 구독하게 한 뒤
 서버에서 이벤트가 발생하면
 채널을 구독하고 있는 프로그램 or 서버들이 이벤트를 받는다.
 
-다양한 용도로 사용되는데 
+다양한 용도로 사용되는데
 예를들면 공용의 저장소를 만들어놨다고 알림메세지를 보내면
 모든 서버들이 해당 파일을 다운 받거나 혹은 변경된 데이터를 모두가 알 수 있게 '공지' 하듯 알리는데 이보다 더 좋은 기능이 없다.
 
+graphql-yoga에서 Subscription은 WebSocket에서 실시간으로 만들어진다.
+
+그러나 우리는 토큰 인증이나 요청을 HTTP로 처리하고 있기에 WebSocket에서의 인증을 하는 법을 모른다.
+인증이 없다면 모든 Subscription들이 채팅 메세지를 받게될것이다.
+
+testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM3ODgzNTIwfQ.CQ6J_1WSD0MbZQym1_O7KUJYl8rU9XWOf7d8GC9wO6o
