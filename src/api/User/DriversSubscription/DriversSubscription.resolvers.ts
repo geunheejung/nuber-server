@@ -1,16 +1,46 @@
+import { withFilter } from 'graphql-yoga';
+import User from '../../../entities/User';
+
+const DRIVER_UPDATE = 'driverUpdate';
 const resolvers = {
   Subscription: {
     DriversSubscription: {
-      subscribe: (_, __, { pubSub }) => {
-        /*
-        context를 통해 념거받은 pubSub Api의 메서드로 'driverUpdate' 라는 채널을 생성함.
-        이제 'driverUpdate' 의 이름과 동일하게 pubSub.publish('driverUpdate') 해주면 생성한 채널을 subscription함.
-        subscription 되면 모든 event를 전달받는다.
-        */
-        return pubSub.asyncIterator('driverUpdate');
-      },
+      // withFilter로 ture or false 하면 request를 막을 수 있다.
+      // 1. driver가 위치를 보고하면
+      // 2. ReportMovement resolvers가 실행
+      // 3. ReportMovement resolvers는 결과물을 driverUpdate 채널에 전송
+      subscribe: withFilter(
+        (_, __, { pubSub }) => pubSub.asyncIterator(DRIVER_UPDATE),
+        (payload, _, { context }) => {
+          const user: User = context.currentUser;
+          const {
+            DriversSubscription: {
+              lastLat: driverLastLat,
+              lastLng: driverLastLng,
+            },
+          } = payload;
+
+          const { lastLat: userLastLat, lastLng: userLastLng } = user;
+
+          const AREA_NUMBER = 0.05;
+
+          const result =
+            driverLastLat >= userLastLat - AREA_NUMBER &&
+            driverLastLat <= userLastLat + AREA_NUMBER &&
+            driverLastLng >= driverLastLng - AREA_NUMBER &&
+            driverLastLng <= driverLastLng + AREA_NUMBER;
+
+          return result;
+        }
+      ),
     },
   },
 };
 
 export default resolvers;
+
+/*
+  context를 통해 념거받은 pubSub Api의 메서드로 'driverUpdate' 라는 채널을 생성함.
+  이제 'driverUpdate' 의 이름과 동일하게 pubSub.publish('driverUpdate') 해주면 생성한 채널을 subscription함.
+  subscription 되면 모든 event를 전달받는다.
+  */
