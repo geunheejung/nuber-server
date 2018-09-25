@@ -12,12 +12,14 @@ const resolvers: Resolvers = {
       async (
         _,
         args: ReportMovementMutationArgs,
-        { req }
+        { req, pubSub }
       ): Promise<ReportMovementResponse> => {
         const user: User = req.user;
         const notNull = cleanNullArgs(args);
         try {
           await User.update({ id: user.id }, { ...notNull });
+          // pubSub안에 update를 보낸다. diver이름과 보낼 data가 필요, key는 완전히 매칭되어야 한다.
+          pubSub.publish('driverUpdate', { DriversSubscription: user });
           return {
             ok: true,
             error: null,
