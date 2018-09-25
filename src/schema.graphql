@@ -45,14 +45,13 @@ type Ride {
   updatedAt: String
 }
 
-# 전화번호 verification 스키마
-type CompletePhopneNumberVerificationResponse {
+type CompleteEmailVerificationResponse {
   ok: Boolean!
   error: String
-  token: String
 }
 
 type Mutation {
+  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
   CompletePhopneNumberVerification(phoneNumber: String!, key: String!): CompletePhopneNumberVerificationResponse!
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, age: Int!, phoneNumber: String!): EmailSignUpResponse!
@@ -60,6 +59,13 @@ type Mutation {
   # email을 arg로 안받는 이유는 token에서 얻어오기 때문
   RequestEmailVerification: RequestEmailVerificationResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+}
+
+# 전화번호 verification 스키마
+type CompletePhopneNumberVerificationResponse {
+  ok: Boolean!
+  error: String
+  token: String
 }
 
 type EmailSignInResponse {
