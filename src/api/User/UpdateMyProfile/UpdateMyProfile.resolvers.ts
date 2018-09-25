@@ -1,3 +1,4 @@
+import _isNull from 'lodash/isNull';
 import { Resolvers } from '../../../types/resolvers';
 import privateResolver from '../../../utils/privateResolver';
 import {
@@ -15,7 +16,28 @@ const resolvers: Resolvers = {
         context
       ): Promise<UpdateMyProfileResponse> => {
         const user: User = context.req.user;
-        await User.update({ id: user.id }, { ...args });
+        const notNull = {};
+
+        for (const key of Object.keys(args)) {
+          const item = args[key];
+          if (!_isNull(item)) {
+            notNull[key] = item;
+          }
+        }
+
+        try {
+          await User.update({ id: user.id }, { ...notNull });
+          return {
+            ok: true,
+            error: null,
+          };
+        } catch (error) {
+          return {
+            ok: false,
+            error: error.message,
+          };
+        }
+
         return {
           ok: false,
           error: '',
