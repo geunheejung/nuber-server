@@ -1,0 +1,9 @@
+type RequestEmailVerificationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  # email을 arg로 안받는 이유는 token에서 얻어오기 때문
+  RequestEmailVerification: RequestEmailVerificationResponse!
+}
