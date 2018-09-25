@@ -27,7 +27,7 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 
 ### Private Resolvers:
 
-- [ ] Verify Email
+- [x] Verify Email
 - [ ] Get my Profile
 - [ ] Update my Profile
 - [ ] Toggle Driving Mode
