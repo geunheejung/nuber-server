@@ -59,6 +59,7 @@ type Mutation {
   # email을 arg로 안받는 이유는 token에서 얻어오기 때문
   RequestEmailVerification: RequestEmailVerificationResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+  ToggleDrivingMode: ToggleDrivingModeResponse!
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
 }
 
@@ -135,6 +136,11 @@ type StartPhoneVerificationResponse {
   ok: Boolean!
   error: String
   token: String
+}
+
+type ToggleDrivingModeResponse {
+  ok: Boolean!
+  error: String
 }
 
 type UpdateMyProfileResponse {

@@ -30,8 +30,8 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 - [x] Verify Email
 - [x] Request Email Verification
 - [x] Complete Email Verification
-- [ ] Update my Profile
-- [ ] Toggle Driving Mode
+- [x] Update my Profile
+- [x] Toggle Driving Mode
 - [ ] Report Location / Orientation
 - [ ] Add Place
 - [ ] Edit Place
