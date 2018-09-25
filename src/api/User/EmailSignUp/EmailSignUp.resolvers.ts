@@ -5,6 +5,7 @@ import {
 } from '../../../types/graph';
 import User from '../../../entities/User';
 import createJWT from '../../../utils/createJWT';
+import Verification from '../../../entities/Verification';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -24,6 +25,13 @@ const resolvers: Resolvers = {
         } else {
           // JWT 작업 시 토큰만들 때 사용됨.
           const newUser = await User.create({ ...args }).save();
+          const { email } = newUser;
+          if (email) {
+            const emailVerification = await Verification.create({
+              payload: email,
+              target: 'EMAIL',
+            });
+          }
           const token = createJWT(newUser.id);
           return {
             ok: true,
