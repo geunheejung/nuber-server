@@ -1,0 +1,24 @@
+Verification 엔티티
+- email, phoneNumber를 verify(검증)할 때, verification 정보를 db에 만들기 위해서 생성된 파일.
+- email, phoneNumber로 검증이 완료되면 고유한 key값을 생성해줄 것
+- 위 key or token 을 통하여 사용자가 verifed 되었는지 체크 가능
+
+phoneNumber verifed 후에 email 검증을 하는 이유는
+
+니콜라스 답변
+Ideally when you create account you will verify your phone first and then complete your profile.
+
+When you wanna login and you already have an account you can use email or phone
+
+
+--------
+typeorm 에서 beforeUpdate, beforeInsert 사이클 함수는 인스턴스화 하였을때랑, 업데이트 했을 때 hook에 걸린다.
+
+유저가 운전모드 전환, 위치정보 보내기를 할 떄
+Subscribe 에서 사람들에게 알림으로 알려줘야 한다.
+
+---
+
+active record 패턴은 Model 내에서 Database에 접근하는 패턴이다.
+
+data Mapper 패턴은 모델 대신 리포지토리에서 데이터베이스에 액세스하는 접근 방식이다.
