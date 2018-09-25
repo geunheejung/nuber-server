@@ -40,7 +40,7 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 - [x] See Nearby Drivers
 - [x] Subscribe to Nearby Drivers
 - [x] Request a Ride
-- [ ] Get Nearby Rides Requests
+- [x] Get Nearby Rides Requests
 - [ ] Subscribe to Nearby Ride Requests
 - [ ] Subscribe to Ride Status
 - [ ] Get Chat Room Messages
