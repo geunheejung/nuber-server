@@ -2,23 +2,29 @@ import helmet from 'helmet';
 import logger from 'morgan';
 import cors from 'cors';
 import { NextFunction, Response } from 'express';
-import { GraphQLServer } from 'graphql-yoga';
+import { GraphQLServer, PubSub } from 'graphql-yoga';
 import schema from './schema';
 import decodeJWT from './utils/decodeJWT';
 
 class App {
   public app: GraphQLServer;
+  public pubSub: any;
+
   constructor() {
     /*
     server를 킬 때 context를 파라미터로 넘겨줄 수 있는데
     여기서 넘겨주는 값이 resolver에서 context로 받는다.
-    모든 resolver로 넘어가기에 넘겨줄때 고유한 key값을 만들어줘야한다.
+    모든 resolver로 넘어가기에 넘겨줄때 고유한 key값을 만들어줘야한다.s
     */
+    this.pubSub = new PubSub();
+    // 아래 설정해주지 않으면 메모리 누수 발생
+    this.pubSub.ee.setMaxListeners(99);
     this.app = new GraphQLServer({
       schema,
       context: req => {
         return {
           req: req.request,
+          pubSub: this.pubSub,
         };
       },
     });

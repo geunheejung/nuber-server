@@ -102,6 +102,11 @@ type CompletePhopneNumberVerificationResponse {
   token: String
 }
 
+# 처음에 근처 운전자들을 받은 뒤 업데이트로 subscribe한다.
+type Subscription {
+  DriversSubscription: User
+}
+
 type EmailSignInResponse {
   ok: Boolean!
   error: String
