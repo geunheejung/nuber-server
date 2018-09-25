@@ -43,6 +43,7 @@
   "dependencies": {
     "bcrypt": "^3.0.1",
     "graphql-tools": "^4.0.0",
-    "merge-graphql-schemas": "^1.5.5"
+    "merge-graphql-schemas": "^1.5.5",
+    "tslint": "^5.11.0"
   }
 }
