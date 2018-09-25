@@ -47,11 +47,9 @@ const resolvers: Resolvers = {
         };
       }
 
-      /** TODO verification을 통과한 뒤 user가 DB에 존재할 경우
-       *
-       */
       try {
         const user = await User.findOne({ phoneNumber });
+        // verification을 통과한 뒤 user가 DB에 존재할 경우
         if (user) {
           user.verifiedPhoneNumber = true;
           user.save();
