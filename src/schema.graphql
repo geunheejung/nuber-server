@@ -11,7 +11,6 @@ type Message {
   text: String!
   chat: Chat!
   user: User!
-  creator: User!
   createdAt: String!
   updatedAt: String
 }
@@ -48,6 +47,17 @@ type EditPlaceResponse {
   error: String
 }
 
+type GetMyPlacesResponse {
+  ok: Boolean!
+  error: String
+  places: [Place]
+}
+
+type Query {
+  GetMyPlaces: GetMyPlacesResponse!
+  GetMyProfile: GetMyProfileResponse!
+}
+
 type Place {
   id: Int!
   name: String!
@@ -55,7 +65,7 @@ type Place {
   lng: Float!
   address: String!
   isFav: Boolean!
-  userID: Int!
+  userId: Int!
   user: User!
   createdAt: String!
   updatedAt: String
@@ -67,9 +77,9 @@ type Ride {
   pickUpAddress: String!
   pickUpLat: Float!
   pickUpLng: Float!
-  dropOffAdress: String!
+  dropOffAddress: String!
   dropOffLat: Float!
-  dropOfLng: Float!
+  dropOffLng: Float!
   price: Float!
   distance: String!
   duration: String!
@@ -114,10 +124,6 @@ type GetMyProfileResponse {
   ok: Boolean!
   error: String
   user: User
-}
-
-type Query {
-  GetMyProfile: GetMyProfileResponse!
 }
 
 type ReportMovementResponse {
