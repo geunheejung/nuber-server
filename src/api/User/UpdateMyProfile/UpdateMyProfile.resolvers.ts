@@ -7,6 +7,18 @@ import {
 } from '../../../types/graph';
 import User from '../../../entities/User';
 
+const getNotNullObj = (obj: object): object => {
+  const resultNotNull: object = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (!_isNull(value)) {
+      resultNotNull[key] = value;
+    }
+  }
+
+  return resultNotNull;
+};
+
 const resolvers: Resolvers = {
   Mutation: {
     UpdateMyProfile: privateResolver(
@@ -16,13 +28,12 @@ const resolvers: Resolvers = {
         context
       ): Promise<UpdateMyProfileResponse> => {
         const user: User = context.req.user;
-        const notNull = {};
+        const notNull: any = getNotNullObj(args);
 
-        for (const key of Object.keys(args)) {
-          const item = args[key];
-          if (!_isNull(item)) {
-            notNull[key] = item;
-          }
+        if (!_isNull(notNull.password)) {
+          user.password = notNull.password;
+          user.save();
+          delete notNull.password;
         }
 
         try {
