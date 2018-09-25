@@ -1,0 +1,13 @@
+type AddPlaceResponse {
+  ok: Boolean!
+  error: String
+}
+type Mutation {
+  AddPlace(
+    name: String!
+    lat: Float! # 위도
+    lng: Float! # 경도
+    address: String! # 주소
+    isFav: Boolean! # 즐겨찾기 여부
+  ): AddPlaceResponse!
+}

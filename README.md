@@ -33,8 +33,8 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 - [x] Update my Profile
 - [x] Toggle Driving Mode
 - [x] Report Location / Orientation
-- [ ] Add Place
-- [ ] Edit Place
+- [x] Add Place
+- [x] Edit Place
 - [ ] Delete Place
 - [ ] See Nearby Drivers
 - [ ] Subscribe to Nearby Drivers

@@ -16,6 +16,32 @@ type Message {
   updatedAt: String
 }
 
+type AddPlaceResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  AddPlace(name: String!, lat: Float!, lng: Float!, address: String!, isFav: Boolean!): AddPlaceResponse!
+  EditPlace(placeId: Int!, name: String, isFav: Boolean): EditPlaceResponse!
+  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
+  CompletePhopneNumberVerification(phoneNumber: String!, key: String!): CompletePhopneNumberVerificationResponse!
+  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
+  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, age: Int!, phoneNumber: String!): EmailSignUpResponse!
+  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
+  ReportMovement(orientation: Float, lat: Float, lng: Float): ReportMovementResponse!
+  # email을 arg로 안받는 이유는 token에서 얻어오기 때문
+  RequestEmailVerification: RequestEmailVerificationResponse!
+  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+  ToggleDrivingMode: ToggleDrivingModeResponse!
+  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
+}
+
+type EditPlaceResponse {
+  ok: Boolean!
+  error: String
+}
+
 type Place {
   id: Int!
   name: String!
@@ -23,6 +49,8 @@ type Place {
   lng: Float!
   address: String!
   isFav: Boolean!
+  userID: Int!
+  user: User!
   createdAt: String!
   updatedAt: String
 }
@@ -48,20 +76,6 @@ type Ride {
 type CompleteEmailVerificationResponse {
   ok: Boolean!
   error: String
-}
-
-type Mutation {
-  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
-  CompletePhopneNumberVerification(phoneNumber: String!, key: String!): CompletePhopneNumberVerificationResponse!
-  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
-  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, age: Int!, phoneNumber: String!): EmailSignUpResponse!
-  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
-  ReportMovement(orientation: Float, lat: Float, lng: Float): ReportMovementResponse!
-  # email을 arg로 안받는 이유는 token에서 얻어오기 때문
-  RequestEmailVerification: RequestEmailVerificationResponse!
-  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
-  ToggleDrivingMode: ToggleDrivingModeResponse!
-  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
 }
 
 # 전화번호 verification 스키마
@@ -131,9 +145,9 @@ type User {
   fbId: String
   chat: Chat
   messages: [Message]
-  # verifications: [Verification]
   ridesAsPassenger: [Ride]
   ridesAsDriver: [Ride]
+  places: [Place]
   createdAt: String!
   updatedAt: String
 }
