@@ -32,6 +32,7 @@ type Mutation {
   ReportMovement(orientation: Float, lastLat: Float, lastLng: Float): ReportMovementResponse!
   # email을 arg로 안받는 이유는 token에서 얻어오기 때문
   RequestEmailVerification: RequestEmailVerificationResponse!
+  RequesrRide(pickUpAddress: String!, pickUpLat: Float!, pickUpLng: Float!, dropOffAddress: String!, dropOffLat: Float!, dropOffLng: Float!, price: Float!, distance: String!, duration: String!): RequestRideResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
   ToggleDrivingMode: ToggleDrivingModeResponse!
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
@@ -146,6 +147,12 @@ type ReportMovementResponse {
 type RequestEmailVerificationResponse {
   ok: Boolean!
   error: String
+}
+
+type RequestRideResponse {
+  ok: Boolean!
+  error: String
+  ride: Ride
 }
 
 type User {
