@@ -21,7 +21,7 @@ Server for the (N)Unber Clone Course on Nomad Academy.
 ### Authentication:
 
 - [x] Generate JWT
-- [ ] Verifiy JWT
+- [x] Verifiy JWT
 
 ---
 
