@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
         context
       ): Promise<CompleteEmailVerificationResponse> => {
         const { key } = args;
-        const user: User = context.req.uesr;
+        const user: User = context.req.user;
         if (user.email) {
           try {
             const verification = await Verification.findOne({
