@@ -38,8 +38,6 @@ const resolvers: Resolvers = {
             };
           }
         } else {
-          // user.isRiding = false;
-          // user.save();
           return {
             ok: false,
             error: `You can't request two rides`,

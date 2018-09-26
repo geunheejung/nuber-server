@@ -8,6 +8,9 @@ import Ride from '../../../entities/Ride';
 import User from '../../../entities/User';
 import { RIDE_STATUS } from '../../../Constans';
 
+// UpdateRideStatus 요청하는 주체는 Driver
+// RIDE = Driver
+
 const resolvers: Resolvers = {
   Mutation: {
     UpdateRideStatus: privateResolver(
