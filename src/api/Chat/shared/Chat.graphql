@@ -13,3 +13,6 @@ type Chat {
 
 # Chat와 Message는 서로 relationship 이다.
 # Chat(messages) <---> Message(message)
+
+# Chat와 Ride는 서로 relationship 이다.
+# Chat <---> Ride

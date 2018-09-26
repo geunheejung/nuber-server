@@ -47,4 +47,48 @@ graphql-yoga에서 Subscription은 WebSocket에서 실시간으로 만들어진�
 그러나 우리는 토큰 인증이나 요청을 HTTP로 처리하고 있기에 WebSocket에서의 인증을 하는 법을 모른다.
 인증이 없다면 모든 Subscription들이 채팅 메세지를 받게될것이다.
 
-testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM3ODgzNTIwfQ.CQ6J_1WSD0MbZQym1_O7KUJYl8rU9XWOf7d8GC9wO6o
+--------
+OneToOne
+
+Ride = JoinColumn
+Ride <----> Chat 
+
+
+? OneToOne 이란
+A가 B의 인스턴스 하나만 포함하고 B는 A의 인스턴스 하나만 포함하는 관계
+A -> B
+B -> A
+
+A or B 둘 중 한쪽은 JoinColumn이 되어야 한다.
+
+? JoinColumn이란
+
+JoinColumn 으로 설정된 테이블에는 상대 테이블의 외래키가 저장된다.
+
++-------------+--------------+----------------------------+
+|                        profile                          |
++-------------+--------------+----------------------------+
+| id          | int(11)      | PRIMARY KEY AUTO_INCREMENT |
+| gender      | varchar(255) |                            |
+| photo       | varchar(255) |                            |
++-------------+--------------+----------------------------+
+
++-------------+--------------+----------------------------+
+|                          user   @JoinColumn()           |
++-------------+--------------+----------------------------+
+| id          | int(11)      | PRIMARY KEY AUTO_INCREMENT |
+| name        | varchar(255) |                            |
+| profileId   | int(11)      | FOREIGN KEY                |
++-------------+--------------+----------------------------+
+
+
+
+
+--------
+
+
+USER_TOKEN = 
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM3OTM3NjY5fQ.B0HOPMY36I2uHSXATlVMuZwtnssaEe1g0d0lg8Y_CQw
+
+DRIVER_TOKEN =
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTM3OTM3OTQ3fQ.QdVzMMcJwZRKqGDmpB_jlEmL6ljRR0i6BV7jymMl5j8
