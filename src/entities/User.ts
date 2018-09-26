@@ -74,9 +74,11 @@ class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   fbId: string;
 
-  //  여러개의 User는 하나의 Chat를 가질 수 있다.
-  @ManyToOne(type => Chat, chat => chat.participants)
-  chat: Chat;
+  @ManyToOne(type => Chat, chat => chat.passenger)
+  chatAsPassenger: Chat[];
+
+  @ManyToOne(type => Chat, chat => chat.dirver)
+  chatAsDriver: Chat[];
 
   // 하나의 유저는 여러개의 Message를 가질 수 있다.
   @OneToMany(type => Message, message => message.user)

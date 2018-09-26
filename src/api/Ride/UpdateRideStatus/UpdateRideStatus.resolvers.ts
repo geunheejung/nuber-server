@@ -8,6 +8,7 @@ import Ride from '../../../entities/Ride';
 import User from '../../../entities/User';
 import { RIDE_STATUS } from '../../../Constans';
 import { RIDE_UPDATE_PUPSUB_KEY } from '../RideStatusSubscription/RideStatusSubscription.resolvers';
+import Chat from '../../../entities/Chat';
 
 // UpdateRideStatus 요청하는 주체는 Driver
 // RIDE = Driver
@@ -26,15 +27,23 @@ const resolvers: Resolvers = {
           try {
             let ride: Ride | undefined;
             if (args.status === RIDE_STATUS.ACCEPTED) {
-              ride = await Ride.findOne({
-                id: args.rideId,
-                status: 'REQUESTING',
-              });
+              ride = await Ride.findOne(
+                {
+                  id: args.rideId,
+                  status: 'REQUESTING',
+                },
+                { relations: ['passenger'] }
+              );
 
               if (ride) {
                 ride.driver = user;
                 user.isTaken = true;
                 user.save();
+                // TODO - [Create a Chat Room]
+                await Chat.create({
+                  driver: user,
+                  passenger: ride.passenger,
+                }).save();
               }
             } else {
               ride = await Ride.findOne({

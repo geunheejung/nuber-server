@@ -5,6 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  Column,
+  ManyToOne,
 } from 'typeorm';
 
 import Message from './Message';
@@ -20,9 +22,15 @@ class Chat extends BaseEntity {
   @OneToMany(type => Message, message => message.chat)
   messages: Message[];
 
-  // 하나의 Chat.participants 는 여러 User 를 가질 수 있다.
-  @OneToMany(type => User, user => user.chat)
-  participants: User[];
+  @Column({ nullable: true })
+  passengerId: number;
+  @ManyToOne(type => User, user => user.chatAsPassenger)
+  passenger: User;
+
+  @Column({ nullable: true })
+  driverId: number;
+  @ManyToOne(type => User, user => user.chatAsDriver)
+  driver: User;
 
   @CreateDateColumn()
   createdAt: string;

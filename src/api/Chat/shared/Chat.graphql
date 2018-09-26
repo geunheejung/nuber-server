@@ -1,9 +1,9 @@
 type Chat {
   id: Int!
   messages: [Message]! # message 모음
-  participants: [User]! # 참가자
+  participants: [User]!
   createdAt: String!
-  updatedAt: String  
+  updatedAt: String
 }
 
 # Chat와 Message는 서로 relationship 이다.
