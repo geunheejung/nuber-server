@@ -1,7 +1,12 @@
 type Chat {
   id: Int!
   messages: [Message]! # message 모음
-  participants: [User]!
+  passengerId: Int!
+  passenger: User!
+  driverId: Int!
+  driver: User!
+  ride: Ride!
+  rideId: Int!
   createdAt: String!
   updatedAt: String
 }

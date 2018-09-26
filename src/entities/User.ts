@@ -77,15 +77,12 @@ class User extends BaseEntity {
   @ManyToOne(type => Chat, chat => chat.passenger)
   chatAsPassenger: Chat[];
 
-  @ManyToOne(type => Chat, chat => chat.dirver)
+  @ManyToOne(type => Chat, chat => chat.driver)
   chatAsDriver: Chat[];
 
   // 하나의 유저는 여러개의 Message를 가질 수 있다.
   @OneToMany(type => Message, message => message.user)
   messages: Message[];
-
-  // @OneToMany(type => Verification, verification => verification.user)
-  // verifications: Verification[];
 
   @OneToMany(type => Ride, ride => ride.passenger)
   ridesAsPassenger: Ride[];

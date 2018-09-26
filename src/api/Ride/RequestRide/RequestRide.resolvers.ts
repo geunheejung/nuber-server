@@ -40,7 +40,9 @@ const resolvers: Resolvers = {
         } else {
           return {
             ok: false,
-            error: `You can't request two rides`,
+            error: user.isDriving
+              ? `You are Driver no request Rides ${user.fullName}`
+              : `You can't request two rides ${user.fullName}`,
             ride: null,
           };
         }

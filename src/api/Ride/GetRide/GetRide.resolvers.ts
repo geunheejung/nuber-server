@@ -9,6 +9,7 @@ const resolvers: Resolvers = {
     GetRide: privateResolver(
       async (_, args: GetRideQueryArgs, { req }): Promise<GetRideResponse> => {
         const user: User = req.user;
+
         try {
           // const relations = { relations: ['passenger', 'driver'] };
           // relations 모든 관계 데이터를 가져오기에 무겁다.
