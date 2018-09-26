@@ -92,6 +92,7 @@ type GetRideResponse {
 # TODO 근처 운전자들을 나에게 보내준다.
 type Subscription {
   NearbyRideSubscription: Ride
+  RideStatusSubscription: Ride
   DriversSubscription: User
 }
 

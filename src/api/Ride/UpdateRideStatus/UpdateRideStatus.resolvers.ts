@@ -7,6 +7,7 @@ import {
 import Ride from '../../../entities/Ride';
 import User from '../../../entities/User';
 import { RIDE_STATUS } from '../../../Constans';
+import { RIDE_UPDATE_PUPSUB_KEY } from '../RideStatusSubscription/RideStatusSubscription.resolvers';
 
 // UpdateRideStatus 요청하는 주체는 Driver
 // RIDE = Driver
@@ -17,7 +18,7 @@ const resolvers: Resolvers = {
       async (
         _,
         args: UpdateRideStatusMutationArgs,
-        { req }
+        { req, pubSub }
       ): Promise<UpdateRideStatusResponse> => {
         const user: User = req.user;
 
@@ -45,6 +46,9 @@ const resolvers: Resolvers = {
             if (ride) {
               ride.status = args.status;
               ride.save();
+              pubSub.publish(RIDE_UPDATE_PUPSUB_KEY, {
+                RideStatusSubscription: ride,
+              });
 
               return {
                 ok: true,

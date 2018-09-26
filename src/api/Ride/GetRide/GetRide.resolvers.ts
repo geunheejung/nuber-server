@@ -17,6 +17,7 @@ const resolvers: Resolvers = {
           });
           if (ride) {
             // 요청하는 유저 or 드라이버가 Ride에 승객으로 또는 드라이버로 존재할 경우
+            // 유저가 드라이버 or 승객인지 체크
             if (ride.passengerId === user.id || ride.driverId === user.id) {
               return {
                 ok: true,
