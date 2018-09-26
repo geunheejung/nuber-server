@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
+import { RIDE_STATUS } from '../Constans';
 
 import User from './User';
 
@@ -18,7 +19,13 @@ class Ride extends BaseEntity {
 
   @Column({
     type: 'text',
-    enum: ['ACCEPTED', 'FINISHED', 'CANCELED', 'REQUESTING', 'ONROUTE'],
+    enum: [
+      RIDE_STATUS.ACCEPTED,
+      RIDE_STATUS.FINISHED,
+      RIDE_STATUS.CANCELED,
+      RIDE_STATUS.REQUESTING,
+      RIDE_STATUS.ONROUTE,
+    ],
     default: 'ACCEPTED',
   })
   status: rideStatus;
