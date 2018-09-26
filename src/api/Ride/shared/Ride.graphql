@@ -15,3 +15,7 @@ type Ride {
   createdAt: String!
   updatedAt: String
 }
+
+type Query {
+  ride: Ride
+}

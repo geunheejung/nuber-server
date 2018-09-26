@@ -3,12 +3,12 @@ import privateResolver from '../../../utils/privateResolver';
 import User from '../../../entities/User';
 import { getRepository, Between } from 'typeorm';
 import Ride from '../../../entities/Ride';
-import { GetNearbyRidesResponse } from '../../../types/graph';
+import { GetNearbyRideResponse } from '../../../types/graph';
 
 const resolvers: Resolvers = {
   Query: {
-    GetNearbyRides: privateResolver(
-      async (_, __, { req }): Promise<GetNearbyRidesResponse> => {
+    GetNearbyRide: privateResolver(
+      async (_, __, { req }): Promise<GetNearbyRideResponse> => {
         const user: User = req.uesr;
         const { lastLat, lastLng } = user;
         // 요청 중 상태이고, 픽업 위치가 사용자 근처인 ride

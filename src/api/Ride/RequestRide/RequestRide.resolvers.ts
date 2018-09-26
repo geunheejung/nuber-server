@@ -15,13 +15,14 @@ const resolvers: Resolvers = {
       async (
         _,
         args: RequestRideMutationArgs,
-        { req, PubSub }
+        { req, pubSub }
       ): Promise<RequestRideResponse> => {
-        const user: User = req.uesr;
-        if (user.isRiding) {
+        const user: User = req.user;
+        if (!user.isRiding) {
           try {
-            const ride = await Ride.create({ ...args, passenger: user });
-            PubSub.publish(RIDE_REQUEST, { NearbyRideSubscription: ride });
+            const ride = await Ride.create({ ...args, passenger: user }).save();
+            // 2번째 인자인 payload로 requestRide를 요청한 user의 위치를 전해주면
+            pubSub.publish(RIDE_REQUEST, { NearbyRideSubscription: ride });
             user.isRiding = true;
             user.save();
             return {
@@ -37,9 +38,11 @@ const resolvers: Resolvers = {
             };
           }
         } else {
+          // user.isRiding = false;
+          // user.save();
           return {
             ok: false,
-            error: 'You can"t request two rides',
+            error: `You can't request two rides`,
             ride: null,
           };
         }
