@@ -24,7 +24,7 @@ type Mutation {
   AddPlace(name: String!, lat: Float!, lng: Float!, address: String!, isFav: Boolean!): AddPlaceResponse!
   DeletePlace(placeId: Int!): DeletePlaceResponse!
   EditPlace(placeId: Int!, name: String, isFav: Boolean): EditPlaceResponse!
-  RequesrRide(pickUpAddress: String!, pickUpLat: Float!, pickUpLng: Float!, dropOffAddress: String!, dropOffLat: Float!, dropOffLng: Float!, price: Float!, distance: String!, duration: String!): RequestRideResponse!
+  RequestRide(pickUpAddress: String!, pickUpLat: Float!, pickUpLng: Float!, dropOffAddress: String!, dropOffLat: Float!, dropOffLng: Float!, price: Float!, distance: String!, duration: String!): RequestRideResponse!
   CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
   CompletePhopneNumberVerification(phoneNumber: String!, key: String!): CompletePhopneNumberVerificationResponse!
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
@@ -77,7 +77,13 @@ type Place {
 type GetNearbyRidesResponse {
   ok: Boolean!
   error: String
-  rides: [Ride]
+  ride: Ride
+}
+
+# TODO 근처 운전자들을 나에게 보내준다.
+type Subscription {
+  NearbyRideSubscription: Ride
+  DriversSubscription: User
 }
 
 type RequestRideResponse {
@@ -114,11 +120,6 @@ type CompletePhopneNumberVerificationResponse {
   ok: Boolean!
   error: String
   token: String
-}
-
-# TODO 근처 운전자들을 나에게 보내준다.
-type Subscription {
-  DriversSubscription: User
 }
 
 type EmailSignInResponse {

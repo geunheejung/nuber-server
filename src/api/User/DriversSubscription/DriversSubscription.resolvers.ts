@@ -19,34 +19,6 @@ const resolvers = {
             },
           } = payload;
           const { lastLat: userLastLat, lastLng: userLastLng } = user;
-          // console.log(driverLastLat, driverLastLng, userLastLat, userLastLng);
-          // console.group('------ [DRIVER] ------');
-          // console.log('------------------------------');
-          // console.log(
-          //   'driverLastLat -->',
-          //   driverLastLat,
-          //   'driverLastLng --> ',
-          //   driverLastLng
-          // );
-          // console.log('------------------------------');
-          // console.groupEnd();
-          // console.group('------ [USER] ------');
-          // console.log('------------------------------');
-          // console.log(
-          //   'userLastLat -->',
-          //   userLastLat,
-          //   'userLastLng -->',
-          //   userLastLng
-          // );
-          // console.log('------------------------------');
-          // console.groupEnd();
-          // console.log(
-          //   '[RESULT]',
-          //   driverLastLat >= userLastLat - 0.05 &&
-          //     driverLastLat <= userLastLat + 0.05 &&
-          //     driverLastLng >= userLastLng - 0.05 &&
-          //     driverLastLng <= userLastLng + 0.05
-          // );
           return (
             driverLastLat >= userLastLat - 0.05 &&
             driverLastLat <= userLastLat + 0.05 &&
